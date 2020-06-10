@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     public function user(){
-    	$this->belongsTo('App\User');
+    	return $this->belongsTo('App\User');
     }
 
     public function tasks(){
-    	$this->hasMany('App\Task');
+    	return $this->hasMany('App\Task');
     }
 }

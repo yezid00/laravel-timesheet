@@ -38,9 +38,9 @@ class User extends Authenticatable
     ];
 
     public function project(){
-        $this->hasMany('App\Project');
+        return $this->hasMany('App\Project');
     }
     public function tasks(){
-        $this->hasMany('App\Task');
+        return $this->hasMany('App\Task');
     }
 }
