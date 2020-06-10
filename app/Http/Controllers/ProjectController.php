@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Task;
+use DB;
+use Redirect;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -14,7 +17,10 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        $projects = Project::all();
+        $tasks = Task::all();
+
+        return view('projects.index', compact('tasks','projects'));
     }
 
     /**
@@ -26,16 +32,33 @@ class ProjectController extends Controller
     {
         //
     }
-
+    /*
+    public function getProjectID($id){
+        $project_id = Project::find($id);
+        return view('projects.index',compact($project_id));
+    }
+*/
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name'=>'required|min:3|max:255',
+            'description'=>'nullable',
+        ]);
+
+        $project = new Project;
+        $project->name = $request->name;
+        $project->description= $request->description;
+        $project->user_id = auth()->user()->id;
+        $project->save();
+
+        return Redirect::back()->with('success','New Project added');
     }
 
     /**
@@ -44,9 +67,10 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function show($id)
     {
-        //
+        $project = Project::find($id);
+        return view('projects.show',compact('project'))->with('success','You are viewing Project:'. $project->name);
     }
 
     /**
@@ -78,8 +102,12 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Project $project)
+    public function destroy($id)
     {
-        //
+        $project = Project::find($id);
+        //$project->task()->detach();
+        $project->delete();
+
+        return Redirect::back()->with('success','Project deleted');     
     }
 }

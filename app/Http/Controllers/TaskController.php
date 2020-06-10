@@ -3,39 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use App\Project;
+use Redirect;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    
+    public function store(Request $request,int $project_id)
     {
-        //
-    }
+        $this->validate($request, [
+            'name'=>'required|min:3|max:255'
+        ]);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        
+        $project = Project::find($project_id);
+        
+
+        $task = new Task;
+
+        $task->name = $request->name;
+        $task->user_id = auth()->user()->id;
+        $task->project()->associate($project);
+
+        $task->save();
+
+        return Redirect::back()->with('success','New Task added');
+        
+
+
     }
 
     /**
@@ -78,8 +75,12 @@ class TaskController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Task $task)
+    public function destroy($id)
     {
-        //
+        $task = Task::find($id);
+        //$post->project()->detach();
+        $task->delete();
+
+        return Redirect::back()->with('success','Task deleted');   
     }
 }
