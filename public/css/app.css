@@ -10928,3 +10928,31 @@ a.text-dark:focus {
   }
 }
 
+.btn-create{
+  float: right;
+}
+.btn-task{
+  float: right;
+}
+.card{
+  margin-bottom: 15px;
+}
+.pro-del{
+  float: right;
+  
+}
+.tsk-del{
+  float: right;
+}
+
+
+
+
+
+
+
+
+
+
+
+
