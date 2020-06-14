@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
+    public function __construct(){
+        return $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,10 +20,11 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
-        $tasks = Task::all();
+        $projects = DB::table('projects')
+                        ->where('user_id',auth()->user()->id)
+                        ->get();
+        return view('projects.index', compact('projects'));
 
-        return view('projects.index', compact('tasks','projects'));
     }
 
     /**

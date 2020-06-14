@@ -13,4 +13,6 @@ class Project extends Model
     public function tasks(){
     	return $this->hasMany('App\Task');
     }
+    //to get a particular user project
+    
 }

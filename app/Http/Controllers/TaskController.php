@@ -4,17 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Task;
 use App\Project;
+use Carbon\Carbon;
 use Redirect;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
 
+    public function __construct(){
+        return $this->middleware('auth');
+    }
     
     public function store(Request $request,int $project_id)
     {
         $this->validate($request, [
-            'name'=>'required|min:3|max:255'
+            'name'=>'required|min:3|max:255',
         ]);
 
         
@@ -22,11 +26,12 @@ class TaskController extends Controller
         
 
         $task = new Task;
+        $dt = new Carbon;
 
         $task->name = $request->name;
         $task->user_id = auth()->user()->id;
         $task->project()->associate($project);
-
+        $task->started_at = $dt->toTimeString();
         $task->save();
 
         return Redirect::back()->with('success','New Task added');
@@ -43,7 +48,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        
     }
 
     /**

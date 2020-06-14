@@ -12,4 +12,6 @@ class Task extends Model
     public function users(){
     	return $this->belongsTo('App\User');
     }
+    //to get a particular user task
+    
 }
