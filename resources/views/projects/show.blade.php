@@ -8,7 +8,7 @@
 		<div class="card-header">
 			<h3>{{ $project->name }}</h3>
 
-			<button class="btn btn-outline-primary btn-sm btn-task" data-toggle='modal' data-target='#addTask' name="add" value="{{ $project->id }}">Add Task</button>
+			<button class="btn btn-outline-primary btn-sm btn-task" data-toggle='modal' data-target='#addTask'>Add Task</button>
 		</div>
 
 			@foreach($project->tasks as $task)
@@ -18,6 +18,7 @@
 							<div class="row">
 								<div class="col">
 									{{ $task->name }}
+									
 								</div>
 								<div class="col task-del">
 									{!! Form::open(['action'=>['TaskController@destroy',$task->id],'method'=>'DELETE']) !!}
@@ -46,7 +47,7 @@
 								        <div class="form-group">
 								        	{{ form::text('name',null,['class'=>'form-control']) }}
 								        </div>
-								        {{ form::submit('Add task',['class'=>'btn btn-primary btn-create']) }}
+								        {{ form::submit('Start task',['class'=>'btn btn-primary btn-create']) }}
 								        {{ form::close() }}
 							        {{-- @endforeach --}}
 							      </div>
