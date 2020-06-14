@@ -20,8 +20,8 @@ class CreateTasksTable extends Migration
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->timestamp('started_at');
-            $table->timestamp('stopped_at')->default(null)->nullable();
+            $table->time('started_at');
+            $table->time('stopped_at')->default(null)->nullable();
             $table->timestamps();
         });
     }
