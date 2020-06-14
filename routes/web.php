@@ -20,4 +20,4 @@ Route::delete('projects/{id}/task','TaskController@destroy');
 //Route::resource('projects','TaskController');
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
